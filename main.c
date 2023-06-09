@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <conio.h>
 
-// Declaracin de funciones
+// Declaracion de funciones
 void retardo(unsigned long int);
 void mostrar(unsigned char);
 void autoFantastico(unsigned long int);
@@ -66,6 +66,7 @@ int main() {
     return 0;
 }
 
+//funciones
 void retardo(unsigned long int a){
     while (a)
     a--;
@@ -84,9 +85,8 @@ void autoFantastico (unsigned long int F) {
     
     controlarVelocidad();
     
-    // C�digo para la secuencia "Auto fantastico"
     
-    getch(); // Esperar a que se presione una tecla para volver al men� principal
+    getch(); 
 }
 
 void carrera(unsigned long int c) {
@@ -95,9 +95,9 @@ void carrera(unsigned long int c) {
     
     controlarVelocidad();
     
-    // C�digo para la secuencia "La carrera"
     
-    getch(); // Esperar a que se presione una tecla para volver al men� principal
+    
+    getch(); 
 }
 
 
@@ -118,9 +118,9 @@ int verificarPassword(const char *clave) {
     password[5] = '\0'; // Terminador de cadena
     
     if (strcmp(password, clave) == 0) {
-        return 1; // Password correcta
+        return 1; // contraseña correcta
     } else {
-        return 0; // Password incorrecta
+        return 0; // contraseña incorrecta
     }
 }
 
@@ -138,7 +138,7 @@ void controlarVelocidad() {
     while (1) {
         int tecla = getch();
         
-        if (tecla == 224) { // Tecla de funci�n especial
+        if (tecla == 224) { 
             tecla = getch();
             
             if (tecla == 72) { // Flecha hacia arriba
