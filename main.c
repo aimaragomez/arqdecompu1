@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <conio.h>
 
-// Declaración de funciones
-void retardo(unsigned long int a);
-void autoFantastico();
-void laCarrera();
-void mostrarMenu();
+// Declaracin de funciones
+void retardo(unsigned long int);
+void mostrar(unsigned char);
+void autoFantastico(unsigned long int);
+void carrera(unsigned long int);
+void choque(unsigned long int);
 void mostrarPassword();
 int verificarPassword(const char *clave);
 void imprimirMensajeBienvenida();
@@ -18,9 +19,24 @@ const char clave[] = "12345"; // Clave de acceso al sistema
 int intentos = 0; // Contador de intentos de acceso
 
 int main() {
+    unsigned long int speedini = 150000000;
+    unsigned long int speed = speedini;
+		
     char opcion;
     
     do {
+
+        printf("---- MENU ----\n");
+		printf("1. Auto Fantastico\n");
+		printf("2. Choque\n");
+		printf("3. Carrera\n");
+		printf("4. Secuencia Propia 1\n");
+		printf("5. Secuencia Propia 2\n");
+		printf("6. Salir\n");
+		printf("Ingrese una opcion: ");
+
+        scanf("%d", &opcion);
+
         mostrarMenu();
         opcion = getch();
         
@@ -29,7 +45,7 @@ int main() {
                 autoFantastico();
                 break;
             case '2':
-                laCarrera();
+                carrera();
                 break;
             case '3':
                 // Secuencia propia con algoritmo
@@ -50,44 +66,40 @@ int main() {
     return 0;
 }
 
-void retardo(unsigned long int a) {
-    while (a) {
-        a--;
-    }
+void retardo(unsigned long int a){
+    while (a)
+    a--;
 }
 
-void autoFantastico() {
+void choque(unsigned long int speed){
+
+
+
+}
+
+
+void autoFantastico (unsigned long int F) {
     printf("\nEjecutando secuencia: Auto fantastico\n");
     printf("Presione cualquier tecla para volver al menu principal.\n");
     
     controlarVelocidad();
     
-    // Código para la secuencia "Auto fantastico"
+    // Cï¿½digo para la secuencia "Auto fantastico"
     
-    getch(); // Esperar a que se presione una tecla para volver al menú principal
+    getch(); // Esperar a que se presione una tecla para volver al menï¿½ principal
 }
 
-void laCarrera() {
+void carrera(unsigned long int c) {
     printf("\nEjecutando secuencia: La carrera\n");
     printf("Presione cualquier tecla para volver al menu principal.\n");
     
     controlarVelocidad();
     
-    // Código para la secuencia "La carrera"
+    // Cï¿½digo para la secuencia "La carrera"
     
-    getch(); // Esperar a que se presione una tecla para volver al menú principal
+    getch(); // Esperar a que se presione una tecla para volver al menï¿½ principal
 }
 
-void mostrarMenu() {
-    system("cls");
-    printf("MENU PRINCIPAL\n");
-    printf("1. Auto fantastico\n");
-    printf("2. La carrera\n");
-    printf("3. Secuencia propia con algoritmo\n");
-    printf("4. Secuencia propia con tabla de datos\n");
-    printf("0. Salir\n");
-    printf("Seleccione una opcion: ");
-}
 
 void mostrarPassword() {
     printf("\nIngrese su password de 5 digitos: ");
@@ -126,7 +138,7 @@ void controlarVelocidad() {
     while (1) {
         int tecla = getch();
         
-        if (tecla == 224) { // Tecla de función especial
+        if (tecla == 224) { // Tecla de funciï¿½n especial
             tecla = getch();
             
             if (tecla == 72) { // Flecha hacia arriba
