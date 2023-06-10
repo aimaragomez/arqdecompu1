@@ -79,10 +79,22 @@ void choque(unsigned long int speed){
 }
 
 
-void autoFantastico (unsigned long int F) {
-    printf("\nEjecutando secuencia: Auto fantastico\n");
-    printf("Presione cualquier tecla para volver al menu principal.\n");
+void autoFantastico (unsigned long int speed) {
+    unsigned int pos = 0x80;
+
     
+    while (1) {
+        for (int i = 0; i < 8; ++i) {
+            printf("Presione ESC para volver al menu principal\n");
+			printf("Delay: %lu\n", speed);
+			ledShow(pos);
+			mostrar(pos);
+			pos >>= 1; 
+			retardo(speed);
+			system("cls"); 
+
+        }
+    }
     controlarVelocidad();
     
     
