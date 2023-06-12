@@ -1,22 +1,120 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
+//#include <termios.h>
+//#include "EasyPIO.h"
+#include <stdbool.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+//#include <ncurses.h>
 
 // Declaracion de funciones
-void retardo(unsigned long int);
-void mostrar(unsigned char);
+void retardo(unsigned long int a);//ya esta
 void autoFantastico(unsigned long int);
-void carrera(unsigned long int);
 void choque(unsigned long int);
-void mostrarPassword();
-int verificarPassword(const char *clave);
-void imprimirMensajeBienvenida();
-void imprimirMensajePasswordInvalida();
-void controlarVelocidad();
+void carrera();
+void pulso_expansivo();
+void loading();
 
-// Variables globales
-const char clave[] = "12345"; // Clave de acceso al sistema
-int intentos = 0; // Contador de intentos de acceso
+void mostrar(unsigned char);
+//void mostrarPassword();
+int verificarPassword(const char *clave);
+void controlarVelocidad();
+void disp_binary(unsigned char valor);
+
+const char led[] = {14,15,18,23,24,25,8,7};
+
+unsigned char TablaAf []= {0x01, 0x02, 0x04,0x08,0x10, 0x20, 0x40, 0x80};
+unsigned char TablaCh []= {0x81, 0x42, 0x24, 0x18, 0x18, 0x24, 0x42, 0x81};
+unsigned char TablaCa []= {0x01, 0x01 ,0x03, 0x03, 0x05, 0x05, 0x09, 0x09, 0x11,0x12,0x24,0x28,0x50,0x60,0x40,0x80};
+unsigned char TP[] = {0x88, 0x48, 0x28, 0x18, 0x14, 0x12, 0x12, 0x14, 0x18,0x28,0x48,0x48, 0x28,0x18,0x14,0x14,0x18,0x28,0x28,0x18,0x18,0x18};
+
+
+void disp_binary(unsigned char valor) {
+    int t;
+    const char led[] = {14, 15, 18, 23, 24, 25, 8, 7};
+
+    //system("cls");
+    for (t = 128; t > 0; t = t/2) {
+        if ( valor & t) {
+            printf("1");
+            //digitalWrite(led[i], 1);
+        } else {
+            printf("0");
+            //digitalWrite(led[i], 0);
+        }
+    }
+     printf("\n");
+} 
+
+
+//funciones
+void retardo(unsigned long int a){
+    while (a)
+    a--;
+}
+
+void choque (unsigned long int speed){
+
+
+     while(1){
+         for (int i = 0; i<8; i++ ){
+            printf("Delay: %lu\n", speed);
+            LS(TablaCh[i]);
+            retardo(speed);
+            system("clear");
+
+
+
+         }
+
+
+
+     }
+
+}
+
+
+void autoFantastico(unsigned long int speed) {
+    unsigned int pos = 0x80;
+    
+    while (1) {
+        for (int i = 0; i < 8; ++i) {
+            printf("Presione ESC para volver al menú principal\n");
+            printf("Delay: %lu\n", speed);
+            
+            // Mostrar la posición actual en los LEDs
+            disp_binary(pos);
+            
+            pos >>= 1;
+            retardo(speed);
+            system("clear");
+        }
+        
+        for (int i = 6; i >= 0; --i) {
+            printf("Presione ESC para volver al menú principal\n");
+            printf("Delay: %lu\n", speed);
+            
+            // Mostrar la posición actual en los LEDs
+            disp_binary(pos);
+            
+            pos <<= 1;
+            retardo(speed);
+            system("clear");
+        }
+    }
+}
+void carrera(){}
+
+void pulso_expansivo(){}
+
+void loading(){}
+
+
+void mostrarPassword() {
+    printf("\nIngrese su password de 5 digitos: ");
+}
+
 
 int main() {
     unsigned long int speedini = 150000000;
@@ -30,140 +128,43 @@ int main() {
 		printf("1. Auto Fantastico\n");
 		printf("2. Choque\n");
 		printf("3. Carrera\n");
-		printf("4. Secuencia Propia 1\n");
-		printf("5. Secuencia Propia 2\n");
+		printf("4. Pulso Expansivo 1\n");
+		printf("5. Loading 2\n");
 		printf("6. Salir\n");
 		printf("Ingrese una opcion: ");
 
         scanf("%d", &opcion);
-
-        mostrarMenu();
-        opcion = getch();
         
         switch (opcion) {
-            case '1':
-                autoFantastico();
-                break;
-            case '2':
-                carrera();
-                break;
-            case '3':
-                // Secuencia propia con algoritmo
-                break;
-            case '4':
-                // Secuencia propia con tabla de datos
-                break;
-            case '0':
-                printf("\nSaliendo del programa...\n");
-                break;
-            default:
-                printf("\nOpcion no valida. Intente nuevamente.\n");
-                break;
-        }
-        
-    } while (opcion != '0');
+        case 1:
+			printf("Auto Fantastico\n");
+			system("clear");
+			autoFantastico(speed);
+			break;
+		case 2:
+			printf("Choque\n");
+			system("clear");
+			choque(speed);
+			break;
+		case 3:
+            printf("Arco Iris\n");
+			system("clear");
+			//sistema propio
+			break;
+		case 4:
+            printf("Intermitente\n");
+			system("clear");
+			//sistema propio
+			break;
+		case 5:
+			system("clear");
+			printf("Adios\n");
+			break;
+		default:
+			system("clear");
+			printf("Has seleccionado una opcion no disponible en el menu, intentalo de nuevo.\n");
+		}
+    } while (opcion != 5);
     
     return 0;
 }
-
-//funciones
-void retardo(unsigned long int a){
-    while (a)
-    a--;
-}
-
-void choque(unsigned long int speed){
-
-
-
-}
-
-
-void autoFantastico (unsigned long int speed) {
-    unsigned int pos = 0x80;
-
-    
-    while (1) {
-        for (int i = 0; i < 8; ++i) {
-            printf("Presione ESC para volver al menu principal\n");
-			printf("Delay: %lu\n", speed);
-			ledShow(pos);
-			mostrar(pos);
-			pos >>= 1; 
-			retardo(speed);
-			system("cls"); 
-
-        }
-    }
-    controlarVelocidad();
-    
-    
-    getch(); 
-}
-
-void carrera(unsigned long int c) {
-    printf("\nEjecutando secuencia: La carrera\n");
-    printf("Presione cualquier tecla para volver al menu principal.\n");
-    
-    controlarVelocidad();
-    
-    
-    
-    getch(); 
-}
-
-
-void mostrarPassword() {
-    printf("\nIngrese su password de 5 digitos: ");
-}
-
-int verificarPassword(const char *clave) {
-    char password[6];
-    int i;
-    
-    mostrarPassword();
-    
-    for (i = 0; i < 5; i++) {
-        password[i] = getch();
-        printf("*");
-    }
-    password[5] = '\0'; // Terminador de cadena
-    
-    if (strcmp(password, clave) == 0) {
-        return 1; // contraseña correcta
-    } else {
-        return 0; // contraseña incorrecta
-    }
-}
-
-void imprimirMensajeBienvenida() {
-    printf("\nBienvenido al Sistema.\n");
-}
-
-void imprimirMensajePasswordInvalida() {
-    printf("\nPassword no valida.\n");
-}
-
-void controlarVelocidad() {
-    int velocidad = 5; // Valor inicial de la velocidad
-    
-    while (1) {
-        int tecla = getch();
-        
-        if (tecla == 224) { 
-            tecla = getch();
-            
-            if (tecla == 72) { // Flecha hacia arriba
-                velocidad++;
-                printf("\nVelocidad incrementada: %d\n", velocidad);
-            } else if (tecla == 80) { // Flecha hacia abajo
-                velocidad--;
-                printf("\nVelocidad reducida: %d\n", velocidad);
-            }
-        } else {
-            break; // Salir del bucle si se presiona otra tecla
-        }
-    }
-}
-
-
