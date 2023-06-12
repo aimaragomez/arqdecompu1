@@ -22,7 +22,7 @@ int verificarPassword(const char *clave);
 void controlarVelocidad();
 void disp_binary(unsigned char valor);
 
-const char led[] = {14,15,18,23,24,25,8,7};
+int delay = 12;
 
 unsigned char TablaAf []= {0x01, 0x02, 0x04,0x08,0x10, 0x20, 0x40, 0x80};
 unsigned char TablaCh []= {0x81, 0x42, 0x24, 0x18, 0x18, 0x24, 0x42, 0x81};
@@ -33,21 +33,28 @@ unsigned char TP[] = {0x88, 0x48, 0x28, 0x18, 0x14, 0x12, 0x12, 0x14, 0x18,0x28,
 void disp_binary(unsigned char valor) {
     int t;
     const char led[] = {14, 15, 18, 23, 24, 25, 8, 7};
-
-    //system("cls");
-    for (t = 128; t > 0; t = t/2) {
-        if ( valor & t) {
-            printf("1");
-            //digitalWrite(led[i], 1);
-        } else {
-            printf("0");
-            //digitalWrite(led[i], 0);
+	const char sw[] = {12,16,20,21};
+	for(int i=0; i<8; i++)
+    {
+        if(valor%2==0){
+            printf("_");
+            digitalWrite(led[i], 1);
         }
-    }
-     printf("\n");
-} 
+            
+        else{
+            printf("*");
+            digitalWrite(led[i], 0);
+        }
+    valor=valor/2;
+  }
+  printf("\r");
+  fflush(stdout);
+
+ 
+};
 
 
+    
 //funciones
 void retardo(unsigned long int a){
     while (a)
@@ -117,6 +124,8 @@ void mostrarPassword() {
 
 
 int main() {
+	pioInit(); 
+	initscr(); 
     unsigned long int speedini = 150000000;
     unsigned long int speed = speedini;
 		
